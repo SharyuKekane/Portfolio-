@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharyu Sanjay Kekane</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --void:#03040d;
+  --deep:#070a1a;
+  --surface:#0c1128;
+  --card:#0f1530;
+  --border:rgba(139,92,246,0.15);
+  --border2:rgba(139,92,246,0.3);
+  --violet:#8b5cf6;
+  --violet-bright:#a78bfa;
+  --violet-dim:rgba(139,92,246,0.12);
+  --violet-glow:rgba(139,92,246,0.06);
+  --text:#e8e4f0;
+  --muted:rgba(232,228,240,0.45);
+  --faint:rgba(232,228,240,0.18);
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--void);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+
+/* STARS CANVAS */
+#stars-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 3rem;
+  background:rgba(3,4,13,0.7);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:600;
+  letter-spacing:0.08em;
+  color:var(--violet-bright);
+}
+.nav-links{display:flex;gap:2rem;align-items:center;}
+.nav-links a{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--violet-bright);}
+.nav-cta{
+  border:1px solid var(--border2) !important;
+  padding:0.4rem 1rem;
+  color:var(--violet-bright) !important;
+  border-radius:2px;
+}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:8rem 2rem 4rem;
+  position:relative;z-index:1;
+}
+.hero-coord{
+  font-family:'Space Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.25em;
+  color:var(--violet);
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp 1s 0.2s forwards;
+}
+.hero-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.5rem,9vw,7.5rem);
+  font-weight:700;line-height:0.95;
+  letter-spacing:-0.02em;
+  margin-bottom:0.5rem;
+  opacity:0;animation:fadeUp 1s 0.4s forwards;
+}
+.hero-name span{
+  display:block;
+  font-style:italic;font-weight:300;
+  color:var(--violet-bright);
+  font-size:clamp(2rem,5vw,4.5rem);
+}
+.hero-role{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(0.65rem,1.5vw,0.8rem);
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:2rem;
+  opacity:0;animation:fadeUp 1s 0.6s forwards;
+}
+.hero-sub{
+  max-width:500px;
+  font-size:0.9rem;color:var(--muted);
+  line-height:1.9;margin-bottom:3rem;
+  opacity:0;animation:fadeUp 1s 0.8s forwards;
+}
+.hero-btns{
+  display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
+  margin-bottom:5rem;
+  opacity:0;animation:fadeUp 1s 1s forwards;
+}
+.btn-p{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;
+  background:var(--violet);color:#fff;
+  border:none;padding:0.85rem 2rem;border-radius:2px;
+  cursor:pointer;text-decoration:none;
+  transition:background 0.2s,box-shadow 0.2s;
+  box-shadow:0 0 20px rgba(139,92,246,0.3);
+}
+.btn-p:hover{background:#7c3aed;box-shadow:0 0 30px rgba(139,92,246,0.5);}
+.btn-s{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;
+  background:transparent;color:var(--violet-bright);
+  border:1px solid var(--border2);padding:0.85rem 2rem;border-radius:2px;
+  cursor:pointer;text-decoration:none;
+  transition:background 0.2s,border-color 0.2s;
+}
+.btn-s:hover{background:var(--violet-dim);border-color:var(--violet);}
+
+/* TECH MARQUEE */
+.tech-bar{
+  width:100%;position:relative;z-index:1;
+  opacity:0;animation:fadeUp 1s 1.2s forwards;
+}
+.tech-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--faint);text-align:center;margin-bottom:1rem;
+}
+.tech-scroll-wrap{
+  overflow:hidden;
+  mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);
+}
+.tech-track{
+  display:flex;gap:1rem;
+  animation:marquee 22s linear infinite;
+  width:max-content;
+}
+.tech-tag{
+  font-family:'Space Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.1em;
+  color:var(--violet-bright);
+  border:1px solid var(--border);
+  padding:0.3rem 0.8rem;border-radius:1px;
+  white-space:nowrap;
+  background:var(--violet-glow);
+}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+section{padding:7rem 0;position:relative;z-index:1;}
+.section-inner{max-width:1100px;margin:0 auto;padding:0 3rem;}
+.s-eye{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--violet);margin-bottom:0.8rem;
+}
+.s-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:700;line-height:1.1;margin-bottom:3rem;
+}
+.divider{
+  width:100%;height:1px;
+  background:linear-gradient(to right,transparent,var(--border2),transparent);
+  position:relative;z-index:1;
+}
+
+/* PROJECTS */
+.projects-list{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.project-row{
+  background:var(--card);
+  padding:2.5rem 3rem;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:2rem;align-items:start;
+  transition:background 0.3s;
+  position:relative;overflow:hidden;
+}
+.project-row::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:var(--violet);
+  transform:scaleY(0);transform-origin:bottom;
+  transition:transform 0.3s;
+}
+.project-row:hover{background:var(--surface);}
+.project-row:hover::before{transform:scaleY(1);}
+.proj-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;font-weight:300;font-style:italic;
+  color:rgba(139,92,246,0.2);line-height:1;
+  min-width:3rem;
+}
+.proj-body{}
+.proj-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:600;
+  margin-bottom:0.5rem;line-height:1.2;
+}
+.proj-desc{font-size:0.85rem;color:var(--muted);line-height:1.8;margin-bottom:0.8rem;}
+.proj-role{
+  font-family:'Space Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.1em;
+  color:var(--violet);margin-bottom:1rem;
+}
+.proj-tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.proj-tag{
+  font-family:'Space Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.08em;
+  color:var(--faint);
+  border:1px solid var(--border);
+  padding:0.2rem 0.5rem;border-radius:1px;
+}
+.proj-meta{text-align:right;}
+.proj-duration{
+  font-family:'Space Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.1em;
+  color:var(--muted);margin-bottom:1rem;white-space:nowrap;
+}
+.proj-link{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.1em;
+  color:var(--violet-bright);text-decoration:none;
+  border-bottom:1px solid var(--border2);
+  padding-bottom:0.15rem;
+  transition:color 0.2s;display:inline-block;
+}
+.proj-link:hover{color:#c4b5fd;}
+
+/* CERTS */
+.certs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1px;background:var(--border);
+}
+.cert-card{
+  background:var(--card);
+  padding:2rem;
+  position:relative;overflow:hidden;
+  transition:background 0.3s;
+}
+.cert-card::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,var(--violet),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.cert-card:hover{background:var(--surface);}
+.cert-card:hover::after{opacity:1;}
+.cert-icon{
+  font-size:1.5rem;margin-bottom:1rem;
+  filter:grayscale(0.3);
+}
+.cert-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:600;
+  margin-bottom:0.4rem;line-height:1.3;
+}
+.cert-skills{font-size:0.75rem;color:var(--muted);margin-bottom:0.8rem;line-height:1.6;}
+.cert-date{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.1em;
+  color:var(--violet);
+}
+
+/* ACHIEVEMENTS */
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+.ach-card{
+  background:var(--card);padding:2.5rem;
+  transition:background 0.3s;
+}
+.ach-card:hover{background:var(--surface);}
+.ach-badge{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;
+  color:#fff;
+  background:var(--violet);
+  padding:0.25rem 0.7rem;border-radius:1px;
+  display:inline-block;margin-bottom:1.2rem;
+}
+.ach-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:600;
+  margin-bottom:0.6rem;line-height:1.3;
+}
+.ach-desc{font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:0.8rem;}
+.ach-link{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;color:var(--violet-bright);
+  text-decoration:none;letter-spacing:0.08em;
+  border-bottom:1px solid var(--border2);padding-bottom:0.15rem;
+}
+
+/* ABOUT */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:start;
+}
+.about-text{font-size:0.9rem;color:var(--muted);line-height:1.9;}
+.about-text p+p{margin-top:1.2rem;}
+.about-right{}
+.edu-item{
+  padding:1.5rem 0;
+  border-bottom:1px solid var(--border);
+}
+.edu-item:last-child{border-bottom:none;}
+.edu-school{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:600;margin-bottom:0.3rem;
+}
+.edu-deg{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.08em;
+  color:var(--violet);margin-bottom:0.2rem;
+}
+.edu-score{font-size:0.78rem;color:var(--muted);}
+.roles-list{margin-top:2rem;display:flex;flex-direction:column;gap:1rem;}
+.role-item{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:1.2rem 1.5rem;border-radius:2px;
+}
+.role-title{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.1em;color:var(--violet-bright);
+  margin-bottom:0.4rem;
+}
+.role-desc{font-size:0.8rem;color:var(--muted);line-height:1.7;}
+
+/* CONTACT */
+#contact{background:var(--deep);}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:start;
+}
+.contact-big{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,4rem);
+  font-weight:700;line-height:1.1;margin-bottom:1.2rem;
+}
+.contact-big em{font-style:italic;color:var(--violet-bright);}
+.contact-sub{font-size:0.85rem;color:var(--muted);line-height:1.8;margin-bottom:2rem;}
+.contact-links{display:flex;flex-direction:column;gap:0.8rem;}
+.c-link{
+  display:flex;align-items:center;gap:0.8rem;
+  font-family:'Space Mono',monospace;
+  font-size:0.68rem;letter-spacing:0.08em;
+  color:var(--muted);text-decoration:none;
+  transition:color 0.2s;
+}
+.c-link:hover{color:var(--violet-bright);}
+.c-link-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--violet);flex-shrink:0;
+}
+.contact-form{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.form-field{
+  background:var(--card);padding:1.2rem 1.5rem;
+  display:flex;flex-direction:column;gap:0.3rem;
+}
+.form-field label{
+  font-family:'Space Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--violet);
+}
+.form-field input,.form-field textarea{
+  background:none;border:none;outline:none;
+  color:var(--text);
+  font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:300;
+  resize:none;width:100%;
+}
+.form-field input::placeholder,.form-field textarea::placeholder{color:var(--faint);}
+.form-submit{
+  background:var(--violet);color:#fff;border:none;
+  padding:1.2rem 2rem;
+  font-family:'Space Mono',monospace;
+  font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;
+  cursor:pointer;transition:background 0.2s,box-shadow 0.2s;
+  box-shadow:0 0 20px rgba(139,92,246,0.25);
+}
+.form-submit:hover{background:#7c3aed;box-shadow:0 0 30px rgba(139,92,246,0.45);}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  position:relative;z-index:1;
+}
+.footer-copy{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.08em;color:var(--faint);
+}
+.footer-back{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color 0.2s;
+}
+.footer-back:hover{color:var(--violet-bright);}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .section-inner{padding:0 1.5rem;}
+  .project-row{grid-template-columns:1fr;gap:1rem;}
+  .proj-num{font-size:2rem;}
+  .about-grid,.contact-grid,.ach-grid{grid-template-columns:1fr;gap:2.5rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <div class="nav-logo">SSK</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#certifications">Certs</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-coord">✦ 20.0059° N, 73.7898° E &nbsp;·&nbsp; Nashik, Maharashtra</div>
+  <h1 class="hero-name">
+    Sharyu Sanjay
+    <span>Kekane</span>
+  </h1>
+  <div class="hero-role">Full-Stack Developer &nbsp;·&nbsp; AI Enthusiast &nbsp;·&nbsp; CS Student</div>
+  <p class="hero-sub">Passionate about building scalable applications, exploring AI frontiers, and leading technical initiatives that make a difference.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-p">Get in touch</a>
+    <a href="#projects" class="btn-s">See my work</a>
+  </div>
+  <div class="tech-bar">
+    <div class="tech-label">Tech stack</div>
+    <div class="tech-scroll-wrap">
+      <div class="tech-track">
+        <span class="tech-tag">React.js</span><span class="tech-tag">Node.js</span><span class="tech-tag">Python</span><span class="tech-tag">Express.js</span><span class="tech-tag">MongoDB</span><span class="tech-tag">MySQL</span><span class="tech-tag">Tailwind CSS</span><span class="tech-tag">FastAPI</span><span class="tech-tag">LangChain</span><span class="tech-tag">LangGraph</span><span class="tech-tag">AWS</span><span class="tech-tag">Docker</span><span class="tech-tag">Gen AI</span><span class="tech-tag">NumPy</span><span class="tech-tag">Pandas</span><span class="tech-tag">Git</span><span class="tech-tag">Figma</span><span class="tech-tag">C++</span><span class="tech-tag">JavaScript</span><span class="tech-tag">REST APIs</span>
+        <span class="tech-tag">React.js</span><span class="tech-tag">Node.js</span><span class="tech-tag">Python</span><span class="tech-tag">Express.js</span><span class="tech-tag">MongoDB</span><span class="tech-tag">MySQL</span><span class="tech-tag">Tailwind CSS</span><span class="tech-tag">FastAPI</span><span class="tech-tag">LangChain</span><span class="tech-tag">LangGraph</span><span class="tech-tag">AWS</span><span class="tech-tag">Docker</span><span class="tech-tag">Gen AI</span><span class="tech-tag">NumPy</span><span class="tech-tag">Pandas</span><span class="tech-tag">Git</span><span class="tech-tag">Figma</span><span class="tech-tag">C++</span><span class="tech-tag">JavaScript</span><span class="tech-tag">REST APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="s-eye">// selected_work</div>
+    <div class="s-title">Projects</div>
+    <div class="projects-list">
+      <div class="project-row">
+        <div class="proj-num">01</div>
+        <div class="proj-body">
+          <div class="proj-name">Nashik Xplore</div>
+          <div class="proj-role">Role: Developer — MERN Stack</div>
+          <div class="proj-desc">A MERN-based tourism platform built for Kumbh Mela featuring dynamic content management, real-time updates, and ongoing feature enhancements for travelers exploring Nashik.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">MongoDB</span><span class="proj-tag">Express.js</span><span class="proj-tag">React.js</span><span class="proj-tag">Node.js</span><span class="proj-tag">Vercel</span>
+          </div>
+        </div>
+        <div class="proj-meta">
+          <div class="proj-duration">3 months</div>
+          <a href="https://nashik-xplore-alpha.vercel.app/" target="_blank" class="proj-link">Live ↗</a>
+        </div>
+      </div>
+      <div class="project-row">
+        <div class="proj-num">02</div>
+        <div class="proj-body">
+          <div class="proj-name">SmartDine</div>
+          <div class="proj-role">Role: Database Developer — MySQL</div>
+          <div class="proj-desc">AI-powered restaurant management system integrating ordering, billing, CRM, analytics, and a conversational chatbot for smart menu recommendations and business insights.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">MySQL</span><span class="proj-tag">AI</span><span class="proj-tag">CRM</span><span class="proj-tag">Analytics</span><span class="proj-tag">Chatbot</span>
+          </div>
+        </div>
+        <div class="proj-meta">
+          <div class="proj-duration">4 months</div>
+        </div>
+      </div>
+      <div class="project-row">
+        <div class="proj-num">03</div>
+        <div class="proj-body">
+          <div class="proj-name">AI Blog Generator & Translator</div>
+          <div class="proj-role">Role: Workflow & API Developer</div>
+          <div class="proj-desc">LLM-powered automated blog generation and multilingual translation system. Built agentic workflows using LangGraph for intelligent content pipelines and automated publishing flows.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span><span class="proj-tag">FastAPI</span><span class="proj-tag">LangChain</span><span class="proj-tag">LangGraph</span><span class="proj-tag">LLM</span>
+          </div>
+        </div>
+        <div class="proj-meta">
+          <div class="proj-duration">2 months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-inner">
+    <div class="s-eye">// verified_credentials</div>
+    <div class="s-title">Certifications</div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">🐍</div>
+        <div class="cert-name">The Joy of Computing using Python</div>
+        <div class="cert-skills">Skills: Python · NPTEL</div>
+        <div class="cert-date">Jan – Apr 2024</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">☁️</div>
+        <div class="cert-name">AWS Academy Cloud Foundations</div>
+        <div class="cert-skills">Skills: AWS Cloud · EC2, S3, IAM, VPC · AWS Academy</div>
+        <div class="cert-date">March 2026</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🤖</div>
+        <div class="cert-name">Complete Agentic AI Bootcamp with LangGraph & LangChain</div>
+        <div class="cert-skills">Skills: Python · LangChain · LangGraph · Udemy</div>
+        <div class="cert-date">March 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-inner">
+    <div class="s-eye">// milestones</div>
+    <div class="s-title">Achievements</div>
+    <div class="ach-grid">
+      <div class="ach-card">
+        <div class="ach-badge">🥇 1st Place</div>
+        <div class="ach-title">DBMS Mini Project Competition</div>
+        <div class="ach-desc">Secured first place with SmartDine — an AI-powered restaurant management system showcasing advanced database design and real-world application.</div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-badge">🥈 2nd Place</div>
+        <div class="ach-title">MSPA — Most Significant Planned Activity</div>
+        <div class="ach-desc">Developed SoulSync, a website prototype built using vibecoding techniques. Recognized as one of the most impactful planned activities of the cohort.</div>
+        <a href="https://soul-sync-kappa.vercel.app/" target="_blank" class="ach-link">View SoulSync ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="s-eye">// about_me</div>
+    <div class="s-title">About</div>
+    <div class="about-grid">
+      <div>
+        <div class="about-text">
+          <p>I'm a Computer Science student at K K Wagh Institute of Engineering, specialising in CSD with Honours in Quantum Computing — currently holding a 8.8 CGPA.</p>
+          <p>My world lives at the intersection of full-stack engineering and AI. Whether it's building MERN platforms, designing agentic LLM workflows, or architecting databases — I love work that challenges me to think in systems.</p>
+          <p>Beyond the code, I've led the FOSS Club running hands-on workshops for 50+ students, and served as Design Head for TEDxKKWIEER where I helped bring the "Sankalp" theme to 1000+ attendees.</p>
+          <p>I also volunteer with the Swapnapurti Foundation and have taught basic computer skills at an NMC school — because technology should reach everyone.</p>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="edu-item">
+          <div class="edu-school">K K Wagh Institute of Engineering</div>
+          <div class="edu-deg">B.Tech CSD + Honours in Quantum Computing</div>
+          <div class="edu-score">CGPA: 8.8 · Nashik</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-school">Nutan Vidya Mandir, Deolali Camp</div>
+          <div class="edu-deg">HSC Diploma</div>
+          <div class="edu-score">75.6% · Nashik</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-school">Sacred Heart Convent High School</div>
+          <div class="edu-deg">SSC Diploma</div>
+          <div class="edu-score">88% · Nashik</div>
+        </div>
+        <div class="roles-list">
+          <div class="role-item">
+            <div class="role-title">Lead — FOSS Club</div>
+            <div class="role-desc">Ran workshops on Django, Docker & package building. Mentored 50+ students through practical sessions.</div>
+          </div>
+          <div class="role-item">
+            <div class="role-title">Design Head — TEDxKKWIEER</div>
+            <div class="role-desc">Led team of 6 to design the "Sankalp" theme reveal for an audience of 1000+.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <div class="s-eye">// initiate_contact</div>
+        <div class="contact-big">Let's build something <em>stellar</em></div>
+        <p class="contact-sub">Have a project, an idea, or just want to connect? I'm always open to interesting conversations and collaborations.</p>
+        <div class="contact-links">
+          <a href="mailto:sharyukekane@gmail.com" class="c-link"><span class="c-link-dot"></span>sharyukekane@gmail.com</a>
+          <a href="tel:9307597709" class="c-link"><span class="c-link-dot"></span>9307597709</a>
+          <a href="#" class="c-link"><span class="c-link-dot"></span>LinkedIn</a>
+          <a href="#" class="c-link"><span class="c-link-dot"></span>GitHub</a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div class="form-field">
+            <label>Name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-field">
+            <label>Message</label>
+            <textarea rows="4" placeholder="Tell me about your project or idea..."></textarea>
+          </div>
+          <button class="form-submit">Send Message ✦</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2026 Sharyu Sanjay Kekane · Built with curiosity</span>
+  <a href="#hero" class="footer-back">Back to orbit ↑</a>
+</footer>
+
+<script>
+const canvas = document.getElementById('stars-canvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+let W, H;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function initStars() {
+  stars = [];
+  for (let i = 0; i < 220; i++) {
+    stars.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.2 + 0.2,
+      alpha: Math.random() * 0.7 + 0.1,
+      twinkle: Math.random() * 0.02 + 0.005,
+      dir: Math.random() > 0.5 ? 1 : -1,
+      vx: (Math.random() - 0.5) * 0.08,
+      vy: (Math.random() - 0.5) * 0.08,
+    });
+  }
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, W, H);
+  for (let s of stars) {
+    s.alpha += s.twinkle * s.dir;
+    if (s.alpha > 0.85 || s.alpha < 0.05) s.dir *= -1;
+    s.x += s.vx; s.y += s.vy;
+    if (s.x < 0) s.x = W;
+    if (s.x > W) s.x = 0;
+    if (s.y < 0) s.y = H;
+    if (s.y > H) s.y = 0;
+
+    const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 2.5);
+    const isViolet = Math.random() > 0.85;
+    const col = isViolet ? `139,92,246` : `232,228,240`;
+    grad.addColorStop(0, `rgba(${col},${s.alpha})`);
+    grad.addColorStop(1, `rgba(${col},0)`);
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r * 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+  }
+  requestAnimationFrame(drawStars);
+}
+
+resize();
+initStars();
+drawStars();
+window.addEventListener('resize', () => { resize(); initStars(); });
+
+// Scroll fade-in for sections
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.project-row, .cert-card, .ach-card, .role-item, .edu-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
